@@ -2,10 +2,11 @@ const express = require("express");
 const serveIndex = require("serve-index");
 
 const app = express();
-const port = process.env.ORSYS_PORT || 3000;
+const port = process.env.GSTOCK_PORT || 3000;
+const publicDir = process.env.GSTOCK_DIR || "./public";
 
-app.use(express.static("."));
-app.use(serveIndex("."));
+app.use(express.static(publicDir));
+app.use(serveIndex(publicDir));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
