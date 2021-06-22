@@ -1,10 +1,11 @@
 const express = require("express");
-const app = express();
-const port = 3000;
+const serveIndex = require("serve-index");
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const app = express();
+const port = process.env.ORSYS_PORT || 3000;
+
+app.use(express.static("."));
+app.use(serveIndex("."));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
