@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Article } from 'src/app/interfaces/article';
 
 @Component({
   selector: 'app-add',
@@ -13,7 +15,13 @@ export class AddComponent implements OnInit {
     qty: new FormControl(1, [Validators.required]),
   });
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  submit() {
+    console.log('submit');
+    // qsdfqsdf.add(this.f.value as Article);
+    this.router.navigateByUrl('/stock');
+  }
 }
