@@ -3,8 +3,10 @@
   <div class="content">
     <nav>
       <button routerLink="add">Ajouter</button>
-      <button>Supprimer</button>
-      <button>Modifier</button>
+      <button [hidden]="selectedArticles.size === 0" (click)="remove()">
+        Supprimer
+      </button>
+      <!-- <button>Modifier</button> -->
     </nav>
     <table>
       <thead>
