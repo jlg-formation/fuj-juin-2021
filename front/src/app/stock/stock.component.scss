@@ -27,5 +27,9 @@ table {
     tr:hover {
       background-color: #ddd;
     }
+
+    tr.selected {
+      background-color: #ccc;
+    }
   }
 }
