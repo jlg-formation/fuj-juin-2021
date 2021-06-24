@@ -1,15 +1,27 @@
 import express from "express";
+import { promises } from "fs";
 import { Article } from "../front/src/app/interfaces/article";
+
+const articleFilename = "./data/articles.json";
+let articles: Article[] = [];
+(async () => {
+  try {
+    const str = await promises.readFile(articleFilename, { encoding: "utf-8" });
+    articles = JSON.parse(str);
+  } catch (err) {}
+})();
+
+async function save() {
+  await promises.writeFile(articleFilename, JSON.stringify(articles));
+}
+
+function getNextSequence() {
+  const ids = articles.map((a) => a.id).map((id) => +id.substring(1));
+  return "a" + (Math.max(...ids) + 1);
+}
 
 const app = express.Router();
 export const api = app;
-
-let articles: Article[] = [
-  { id: "a1", name: "Tournevis", price: 2.99, qty: 234 },
-  { id: "a2", name: "Marteau", price: 5.26, qty: 12 },
-];
-
-let seq = 2;
 
 app.get("/articles", (req, res) => {
   res.json(articles);
@@ -19,14 +31,15 @@ app.use(express.json());
 
 app.post("/articles", (req, res) => {
   const article = req.body as Article;
-  seq++;
-  article.id = "a" + seq;
+  article.id = getNextSequence();
   articles.push(article);
+  save();
   res.json(article);
 });
 
 app.delete("/articles", (req, res) => {
   const ids = req.body as string[];
   articles = articles.filter((a) => !ids.includes(a.id));
+  save();
   res.status(204).end();
 });
