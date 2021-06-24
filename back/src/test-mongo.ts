@@ -1,8 +1,8 @@
 import {MongoClient, ObjectId} from 'mongodb';
 import {Article} from './interfaces/article';
 
-const sleep = (delay: number) =>
-  new Promise(resolve => setTimeout(resolve, delay));
+// const sleep = (delay: number) =>
+//   new Promise(resolve => setTimeout(resolve, delay));
 
 (async () => {
   try {

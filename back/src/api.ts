@@ -9,7 +9,9 @@ let articles: Article[] = [];
   try {
     const str = await promises.readFile(articleFilename, {encoding: 'utf-8'});
     articles = JSON.parse(str);
-  } catch (err) {}
+  } catch (err) {
+    console.log('err: ', err);
+  }
 })();
 
 async function save() {

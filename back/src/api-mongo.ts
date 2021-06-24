@@ -16,7 +16,9 @@ let db: Db;
 })();
 
 function remap(article: Article) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   article.id = (article as any)._id;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delete (article as any)._id;
 }
 
