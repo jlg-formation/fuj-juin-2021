@@ -12,3 +12,11 @@ const articles: Article[] = [
 app.get("/articles", (req, res) => {
   res.json(articles);
 });
+
+app.use(express.json());
+
+app.post("/articles", (req, res) => {
+  const article = req.body as Article;
+  articles.push(article);
+  res.json(article);
+});
