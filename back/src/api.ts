@@ -1,8 +1,9 @@
 import express from 'express';
 import {promises} from 'fs';
+import path from 'path';
 import {Article} from './interfaces/article';
 
-const articleFilename = './data/articles.json';
+const articleFilename = path.resolve(process.cwd(), './data/articles.json');
 let articles: Article[] = [];
 (async () => {
   try {
