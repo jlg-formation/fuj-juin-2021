@@ -20,6 +20,10 @@ app.use(serveIndex(angularDir));
 app.use(express.static(publicDir));
 app.use(serveIndex(publicDir));
 
+app.use((req, res) => {
+  res.sendFile(path.resolve(angularDir, "index.html"));
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
