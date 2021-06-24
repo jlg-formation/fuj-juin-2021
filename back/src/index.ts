@@ -1,24 +1,30 @@
-console.log('Try npm run lint/fix!');
+import express from 'express';
+import serveIndex from 'serve-index';
+import cors from 'cors';
+import path from 'path';
 
-const longString =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut aliquet diam.';
+import {api} from './api-mongo';
 
-const trailing = 'Semicolon';
+const app = express();
+const port = +(process.env.GSTOCK_PORT || '3000');
+const publicDir =
+  process.env.GSTOCK_DIR || path.resolve(process.cwd(), './public');
+const angularDir = path.resolve(process.cwd(), '../front/dist/front');
 
-const why = 'am I tabbed?';
+app.use(cors());
 
-export function doSomeStuff(
-  withThis: string,
-  andThat: string,
-  andThose: string[]
-) {
-  //function on one line
-  if (!andThose.length) {
-    return false;
-  }
-  console.log(withThis);
-  console.log(andThat);
-  console.dir(andThose);
-  return;
-}
-// TODO: more examples
+app.use('/api', api);
+
+app.use(express.static(angularDir));
+app.use(serveIndex(angularDir));
+
+app.use(express.static(publicDir));
+app.use(serveIndex(publicDir));
+
+app.use((req, res) => {
+  res.sendFile(path.resolve(angularDir, 'index.html'));
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
