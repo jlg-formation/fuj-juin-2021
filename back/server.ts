@@ -2,7 +2,7 @@ import express from "express";
 import serveIndex from "serve-index";
 import cors from "cors";
 
-import { api } from "./api";
+import { api } from "./api-mongo";
 
 const app = express();
 const port = +(process.env.GSTOCK_PORT || "3000");
