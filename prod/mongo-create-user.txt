@@ -1,0 +1,10 @@
+use gestion-stock
+
+db.createUser({
+	user: "toto",
+	pwd: "titi",
+	roles:[{role: "readWrite" , db:"gestion-stock"}]
+})
+
+# open all IP by using
+# https://medium.com/@Hardy2151/how-to-connect-to-your-remote-mongodb-server-68725a8e53f
