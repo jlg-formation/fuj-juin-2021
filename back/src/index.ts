@@ -5,6 +5,8 @@ import path from 'path';
 
 import {api} from './api-mongo';
 
+console.log('starting...');
+
 const app = express();
 const port = +(process.env.GSTOCK_PORT || '3000');
 const publicDir =
