@@ -2,26 +2,28 @@ import express from 'express';
 import {MongoClient, ObjectId, Db} from 'mongodb';
 import {Article} from './interfaces/article';
 
-const uri = 'mongodb://toto4:titi@MW31:27017/gestion-stock';
+const uri =
+  process.env.GSTOCK_MONGO_URL || 'mongodb://localhost:27017/gestion-stock';
+// 'mongodb://toto4:titi@MW31:27017/gestion-stock';
+
 const client = new MongoClient(uri, {
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 5000,
+  serverSelectionTimeoutMS: +(process.env.GSTOCK_MONGO_TIMEOUT || 5000),
 });
 let db: Db;
 
 (async () => {
   try {
-    console.time('top');
+    console.time('initdb');
     console.log('about to connect to ' + uri);
     await client.connect();
-    console.timeLog('top', 'hello');
-    console.timeEnd('top');
-    console.log('successfully connected to MongoDB');
+    console.timeLog('initdb', 'sucessfull');
     db = client.db('gestion-stock');
   } catch (err) {
-    console.timeLog('top', 'hello');
-    console.timeEnd('top');
+    console.timeLog('initdb', 'error');
     console.log('err: ', err);
+  } finally {
+    console.timeEnd('initdb');
   }
 })();
 
